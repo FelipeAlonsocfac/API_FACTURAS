@@ -1,4 +1,5 @@
 using ApiFacturas.DataAcces;
+using ApiFacturas.Repository;
 using ApiFacturas.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,8 +30,9 @@ namespace ApiFacturas
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            //dbacces
             services.AddTransient<IDBContext, DBContext>();
+            //services
             services.AddTransient<IDetalleFacturaService, DetalleFacturaService>();
             services.AddTransient<IClienteService, ClienteService>();
             services.AddTransient<IEmpresaService, EmpresaService>();
@@ -38,6 +40,8 @@ namespace ApiFacturas
             services.AddTransient<IProductoService, ProductoService>();
             services.AddTransient<ISedeService, SedeService>();
             services.AddTransient<IImpuestoService, ImpuestoService>();
+            //repos
+            services.AddTransient<IProductoRepository, ProductoRepository>();
 
             services.AddDbContext<DBContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
@@ -45,7 +49,17 @@ namespace ApiFacturas
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FacturasAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "FacturasAPI",
+                    Version = "v1",
+                    Description = "API para factura",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Carlos Alonso",
+                        Email = "xfelipe98@gmail.com",
+                    }
+                });
             });
         }
 

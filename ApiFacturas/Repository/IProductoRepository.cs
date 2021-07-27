@@ -1,13 +1,15 @@
 ﻿using ApiFacturas.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiFacturas.Services
+namespace ApiFacturas.Repository
 {
-    public interface IProductoService
+    public interface IProductoRepository
     {
         Task AddProducto(Producto producto);
-        Task<Producto> GetId(int id);
+        Task<Producto> GetProducto(int id);
         List<Producto> GetAll();
         void UpdateProducto(Producto producto);
         Task DeleteProducto(Producto producto);

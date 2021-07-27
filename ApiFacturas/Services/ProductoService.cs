@@ -1,47 +1,42 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
+using ApiFacturas.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ApiFacturas.Services
 {
     public class ProductoService : IProductoService
     {
-        private readonly IDBContext _dbContext;
-        public ProductoService(IDBContext dbContext)
+        private readonly IProductoRepository _productoRepository;
+        public ProductoService(IProductoRepository productoRepository)
         {
-            _dbContext = dbContext;
+            _productoRepository = productoRepository;
         }
-        public void AddProducto(Producto producto)
+        public async Task AddProducto(Producto producto)
         {
-
-            _dbContext.Productos.Add(producto);
-            _dbContext.SaveChanges();
+            await _productoRepository.AddProducto(producto);
         }
-        public void DeleteProducto(int id)
+        public async Task<Producto> GetId(int id)
         {
-            var producto = GetProducto(id);
-            DeleteProducto(producto);
+            return await _productoRepository.GetProducto(id);
         }
-        public void DeleteProducto(Producto producto)
+        public List<Producto> GetAll()
         {
-            _dbContext.Productos.Remove(producto);
-            _dbContext.SaveChanges();
+            return _productoRepository.GetAll();
         }
-        public List<Producto> GetProductos()
+        public void UpdateProducto(Producto producto)
         {
-            return _dbContext.Productos.Select(x => x).ToList();
+            _productoRepository.UpdateProducto(producto);
         }
-        public Producto GetProducto(int id)
+        public async Task DeleteProducto(Producto producto)
         {
-            return _dbContext.Productos.Where(x => x.ProductoId == id).FirstOrDefault();
+            await _productoRepository.DeleteProducto(producto);
         }
-        public Producto UpdateProducto(Producto producto)
+        public async Task DeleteId(int id)
         {
-
-            var productoUpdated = _dbContext.Productos.Update(producto).Entity;
-            _dbContext.SaveChanges();
-            return productoUpdated;
+            await _productoRepository.DeleteId(id);
         }
     }
 }
