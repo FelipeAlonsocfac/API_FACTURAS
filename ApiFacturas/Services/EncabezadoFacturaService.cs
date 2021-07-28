@@ -1,47 +1,42 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
+using ApiFacturas.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ApiFacturas.Services
 {
     public class EncabezadoFacturaService : IEncabezadoFacturaService
     {
-        private readonly IDBContext _dbContext;
-        public EncabezadoFacturaService(IDBContext dbContext)
+        private readonly IEncabezadoFacturaRepository _encabezadoFacturaRepository;
+        public EncabezadoFacturaService(IEncabezadoFacturaRepository encabezadoFacturaRepository)
         {
-            _dbContext = dbContext;
+            _encabezadoFacturaRepository = encabezadoFacturaRepository;
         }
-        public void AddEncabezadoFactura(EncabezadoFactura encabezado)
+        public async Task AddEncabezadoFactura(EncabezadoFactura encabezadoFactura)
         {
-
-            _dbContext.EncabezadosFacturas.Add(encabezado);
-            _dbContext.SaveChanges();
+            await _encabezadoFacturaRepository.AddEncabezadoFactura(encabezadoFactura);
         }
-        public void DeleteEncabezadoFactura(int id)
+        public async Task<EncabezadoFactura> GetId(int id)
         {
-            var encabezado = GetEncabezadoFactura(id);
-            DeleteEncabezadoFactura(encabezado);
+            return await _encabezadoFacturaRepository.GetEncabezadoFactura(id);
         }
-        public void DeleteEncabezadoFactura(EncabezadoFactura encabezado)
+        public List<EncabezadoFactura> GetAll()
         {
-            _dbContext.EncabezadosFacturas.Remove(encabezado);
-            _dbContext.SaveChanges();
+            return _encabezadoFacturaRepository.GetAll();
         }
-        public List<EncabezadoFactura> GetEncabezadoFacturas()
+        public void UpdateEncabezadoFactura(EncabezadoFactura encabezadoFactura)
         {
-            return _dbContext.EncabezadosFacturas.Select(x => x).ToList();
+            _encabezadoFacturaRepository.UpdateEncabezadoFactura(encabezadoFactura);
         }
-        public EncabezadoFactura GetEncabezadoFactura(int id)
+        public async Task DeleteEncabezadoFactura(EncabezadoFactura encabezadoFactura)
         {
-            return _dbContext.EncabezadosFacturas.Where(x => x.Id == id).FirstOrDefault();
+            await _encabezadoFacturaRepository.DeleteEncabezadoFactura(encabezadoFactura);
         }
-        public EncabezadoFactura UpdateEncabezadoFactura(EncabezadoFactura encabezado)
+        public async Task DeleteId(int id)
         {
-
-            var encabezadoUpdated = _dbContext.EncabezadosFacturas.Update(encabezado).Entity;
-            _dbContext.SaveChanges();
-            return encabezadoUpdated;
+            await _encabezadoFacturaRepository.DeleteId(id);
         }
     }
 }

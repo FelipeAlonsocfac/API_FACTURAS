@@ -1,13 +1,15 @@
 ﻿using ApiFacturas.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiFacturas.Services
+namespace ApiFacturas.Repository
 {
-    public interface IClienteService
+    public interface IClienteRepository
     {
         Task AddCliente(Cliente cliente);
-        Task<Cliente> GetId(int id);
+        Task<Cliente> GetCliente(int id);
         List<Cliente> GetAll();
         void UpdateCliente(Cliente cliente);
         Task DeleteCliente(Cliente cliente);

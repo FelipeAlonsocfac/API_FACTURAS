@@ -1,47 +1,42 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
+using ApiFacturas.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ApiFacturas.Services
 {
     public class ClienteService : IClienteService
     {
-        private readonly IDBContext _dbContext;
-        public ClienteService(IDBContext dbContext)
+        private readonly IClienteRepository _clienteRepository;
+        public ClienteService(IClienteRepository clienteRepository)
         {
-            _dbContext = dbContext;
+            _clienteRepository = clienteRepository;
         }
-        public void AddCliente(Cliente cliente)
+        public async Task AddCliente(Cliente cliente)
         {
-
-            _dbContext.Clientes.Add(cliente);
-            _dbContext.SaveChanges();
+            await _clienteRepository.AddCliente(cliente);
         }
-        public void DeleteCliente(int id)
+        public async Task<Cliente> GetId(int id)
         {
-            var cliente = GetCliente(id);
-            DeleteCliente(cliente);
+            return await _clienteRepository.GetCliente(id);
         }
-        public void DeleteCliente(Cliente cliente)
+        public List<Cliente> GetAll()
         {
-            _dbContext.Clientes.Remove(cliente);
-            _dbContext.SaveChanges();
+            return _clienteRepository.GetAll();
         }
-        public List<Cliente> GetClientes()
+        public void UpdateCliente(Cliente cliente)
         {
-            return _dbContext.Clientes.Select(x => x).ToList();
+            _clienteRepository.UpdateCliente(cliente);
         }
-        public Cliente GetCliente(int id)
+        public async Task DeleteCliente(Cliente cliente)
         {
-            return _dbContext.Clientes.Where(x => x.ClienteId == id).FirstOrDefault();
+            await _clienteRepository.DeleteCliente(cliente);
         }
-        public Cliente UpdateCliente(Cliente cliente)
+        public async Task DeleteId(int id)
         {
-
-            var clientUpdated = _dbContext.Clientes.Update(cliente).Entity;
-            _dbContext.SaveChanges();
-            return clientUpdated;
+            await _clienteRepository.DeleteId(id);
         }
     }
 }

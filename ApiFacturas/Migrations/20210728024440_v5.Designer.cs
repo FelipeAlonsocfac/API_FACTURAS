@@ -4,14 +4,16 @@ using ApiFacturas.DataAcces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ApiFacturas.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20210728024440_v5")]
+    partial class v5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,6 +146,8 @@ namespace ApiFacturas.Migrations
 
                     b.HasKey("ProductoId");
 
+                    b.HasIndex("IvaId");
+
                     b.ToTable("Productos");
                 });
 
@@ -206,6 +210,17 @@ namespace ApiFacturas.Migrations
                     b.Navigation("Cliente");
 
                     b.Navigation("Sede");
+                });
+
+            modelBuilder.Entity("ApiFacturas.Models.Producto", b =>
+                {
+                    b.HasOne("ApiFacturas.Models.Impuesto", "Iva")
+                        .WithMany()
+                        .HasForeignKey("IvaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Iva");
                 });
 
             modelBuilder.Entity("ApiFacturas.Models.Sede", b =>

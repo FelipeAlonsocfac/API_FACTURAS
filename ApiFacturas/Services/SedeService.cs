@@ -1,47 +1,42 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
+using ApiFacturas.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ApiFacturas.Services
 {
     public class SedeService : ISedeService
     {
-        private readonly IDBContext _dbContext;
-        public SedeService(IDBContext dbContext)
+        private readonly ISedeRepository _sedeRepository;
+        public SedeService(ISedeRepository sedeRepository)
         {
-            _dbContext = dbContext;
+            _sedeRepository = sedeRepository;
         }
-        public void AddSede(Sede sede)
+        public async Task AddSede(Sede sede)
         {
-
-            _dbContext.Sedes.Add(sede);
-            _dbContext.SaveChanges();
+            await _sedeRepository.AddSede(sede);
         }
-        public void DeleteSede(int id)
+        public async Task<Sede> GetId(int id)
         {
-            var sede = GetSede(id);
-            DeleteSede(sede);
+            return await _sedeRepository.GetSede(id);
         }
-        public void DeleteSede(Sede sede)
+        public List<Sede> GetAll()
         {
-            _dbContext.Sedes.Remove(sede);
-            _dbContext.SaveChanges();
+            return _sedeRepository.GetAll();
         }
-        public List<Sede> GetSedes()
+        public void UpdateSede(Sede sede)
         {
-            return _dbContext.Sedes.Select(x => x).ToList();
+            _sedeRepository.UpdateSede(sede);
         }
-        public Sede GetSede(int id)
+        public async Task DeleteSede(Sede sede)
         {
-            return _dbContext.Sedes.Where(x => x.SedeId == id).FirstOrDefault();
+            await _sedeRepository.DeleteSede(sede);
         }
-        public Sede UpdateSede(Sede sede)
+        public async Task DeleteId(int id)
         {
-
-            var sedeUpdated = _dbContext.Sedes.Update(sede).Entity;
-            _dbContext.SaveChanges();
-            return sedeUpdated;
+            await _sedeRepository.DeleteId(id);
         }
     }
 }

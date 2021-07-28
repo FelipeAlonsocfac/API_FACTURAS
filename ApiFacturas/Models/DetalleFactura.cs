@@ -7,7 +7,6 @@ namespace ApiFacturas.Models
 {
     public class DetalleFactura
     {
-
         public int Id { get; set; }
         public string MetodoPago { get; set; }
         public Producto Producto { get; set; }

@@ -1,47 +1,42 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
+using ApiFacturas.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ApiFacturas.Services
 {
     public class ImpuestoService : IImpuestoService
     {
-        private readonly IDBContext _dbContext;
-        public ImpuestoService(IDBContext dbContext)
+        private readonly IImpuestoRepository _impuestoRepository;
+        public ImpuestoService(IImpuestoRepository impuestoRepository)
         {
-            _dbContext = dbContext;
+            _impuestoRepository = impuestoRepository;
         }
-        public void AddImpuesto(Impuesto impuesto)
+        public async Task AddImpuesto(Impuesto impuesto)
         {
-
-            _dbContext.Impuestos.Add(impuesto);
-            _dbContext.SaveChanges();
+            await _impuestoRepository.AddImpuesto(impuesto);
         }
-        public void DeleteImpuesto(int id)
+        public async Task<Impuesto> GetId(int id)
         {
-            var impuesto = GetImpuesto(id);
-            DeleteImpuesto(impuesto);
+            return await _impuestoRepository.GetImpuesto(id);
         }
-        public void DeleteImpuesto(Impuesto impuesto)
+        public List<Impuesto> GetAll()
         {
-            _dbContext.Impuestos.Remove(impuesto);
-            _dbContext.SaveChanges();
+            return _impuestoRepository.GetAll();
         }
-        public List<Impuesto> GetImpuestos()
+        public void UpdateImpuesto(Impuesto impuesto)
         {
-            return _dbContext.Impuestos.Select(x => x).ToList();
+            _impuestoRepository.UpdateImpuesto(impuesto);
         }
-        public Impuesto GetImpuesto(int id)
+        public async Task DeleteImpuesto(Impuesto impuesto)
         {
-            return _dbContext.Impuestos.Where(x => x.ImpuestoId == id).FirstOrDefault();
+            await _impuestoRepository.DeleteImpuesto(impuesto);
         }
-        public Impuesto UpdateImpuesto(Impuesto impuesto)
+        public async Task DeleteId(int id)
         {
-
-            var impuestoUpdated = _dbContext.Impuestos.Update(impuesto).Entity;
-            _dbContext.SaveChanges();
-            return impuestoUpdated;
+            await _impuestoRepository.DeleteId(id);
         }
     }
 }

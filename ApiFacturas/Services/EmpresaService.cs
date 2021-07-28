@@ -1,47 +1,42 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
+using ApiFacturas.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ApiFacturas.Services
 {
     public class EmpresaService : IEmpresaService
     {
-        private readonly IDBContext _dbContext;
-        public EmpresaService(IDBContext dbContext)
+        private readonly IEmpresaRepository _empresaRepository;
+        public EmpresaService(IEmpresaRepository empresaRepository)
         {
-            _dbContext = dbContext;
+            _empresaRepository = empresaRepository;
         }
-        public void AddEmpresa(Empresa empresa)
+        public async Task AddEmpresa(Empresa empresa)
         {
-
-            _dbContext.Empresas.Add(empresa);
-            _dbContext.SaveChanges();
+            await _empresaRepository.AddEmpresa(empresa);
         }
-        public void DeleteEmpresa(int id)
+        public async Task<Empresa> GetId(int id)
         {
-            var empresa = GetEmpresa(id);
-            DeleteEmpresa(empresa);
+            return await _empresaRepository.GetEmpresa(id);
         }
-        public void DeleteEmpresa(Empresa empresa)
+        public List<Empresa> GetAll()
         {
-            _dbContext.Empresas.Remove(empresa);
-            _dbContext.SaveChanges();
+            return _empresaRepository.GetAll();
         }
-        public List<Empresa> GetEmpresas()
+        public void UpdateEmpresa(Empresa empresa)
         {
-            return _dbContext.Empresas.Select(x => x).ToList();
+            _empresaRepository.UpdateEmpresa(empresa);
         }
-        public Empresa GetEmpresa(int id)
+        public async Task DeleteEmpresa(Empresa empresa)
         {
-            return _dbContext.Empresas.Where(x => x.EmpresaId== id).FirstOrDefault();
+            await _empresaRepository.DeleteEmpresa(empresa);
         }
-        public Empresa UpdateEmpresa(Empresa empresa)
+        public async Task DeleteId(int id)
         {
-
-            var empUpdated = _dbContext.Empresas.Update(empresa).Entity;
-            _dbContext.SaveChanges();
-            return empUpdated;
+            await _empresaRepository.DeleteId(id);
         }
     }
 }

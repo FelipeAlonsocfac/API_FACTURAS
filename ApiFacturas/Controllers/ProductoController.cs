@@ -36,9 +36,9 @@ namespace ApiFacturas.Controllers
 
         // POST api/<ProductoController>
         [HttpPost]
-        public void Post([FromBody] Producto producto)
+        public async Task Post([FromBody]Producto producto)
         {
-            _productoService.AddProducto(producto);
+            await _productoService.AddProducto(producto);
         }
 
         // PUT api/<ProductoController>/5

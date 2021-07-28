@@ -1,43 +1,43 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
+using ApiFacturas.Repository;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ApiFacturas.Services
 {
     public class DetalleFacturaService : IDetalleFacturaService
     {
 
-        private readonly IDBContext _dbContext;
-        public DetalleFacturaService(IDBContext dbContext)
+        private readonly IDetalleFacturaRepository _detalleFacturaRepository;
+        public DetalleFacturaService(IDetalleFacturaRepository detalleFacturaRepository)
         {
-            _dbContext = dbContext;
+            _detalleFacturaRepository = detalleFacturaRepository;
         }
-        public void AddFactura(DetalleFactura factura) {
-           
-            _dbContext.DetalleFacturas.Add(factura);
-            _dbContext.SaveChanges();
-        }
-        public void DeleteDetalleFactura(int id) {
-            var factura = GetFactura(id);
-            DeleteDetalleFactura(factura);
-        }
-        public void DeleteDetalleFactura(DetalleFactura factura)
+        public async Task AddDetalleFactura(DetalleFactura detalleFactura)
         {
-            _dbContext.DetalleFacturas.Remove(factura);
-            _dbContext.SaveChanges();
+            await _detalleFacturaRepository.AddDetalleFactura(detalleFactura);
         }
-        public List<DetalleFactura> GetFacturas() {
-            return _dbContext.DetalleFacturas.Select(x => x).ToList();
+        public async Task<DetalleFactura> GetId(int id)
+        {
+            return await _detalleFacturaRepository.GetDetalleFactura(id);
         }
-        public DetalleFactura GetFactura(int id) {
-            return _dbContext.DetalleFacturas.Where(x => x.Id == id).FirstOrDefault();
+        public List<DetalleFactura> GetAll()
+        {
+            return _detalleFacturaRepository.GetAll();
         }
-        public DetalleFactura UpdateDetalleFactura(DetalleFactura factura) {
-
-            var factUpdated = _dbContext.DetalleFacturas.Update(factura).Entity;
-            _dbContext.SaveChanges();
-            return factUpdated;
+        public void UpdateDetalleFactura(DetalleFactura detalleFactura)
+        {
+            _detalleFacturaRepository.UpdateDetalleFactura(detalleFactura);
+        }
+        public async Task DeleteDetalleFactura(DetalleFactura detalleFactura)
+        {
+            await _detalleFacturaRepository.DeleteDetalleFactura(detalleFactura);
+        }
+        public async Task DeleteId(int id)
+        {
+            await _detalleFacturaRepository.DeleteId(id);
         }
     }
 }

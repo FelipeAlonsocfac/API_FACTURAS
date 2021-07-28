@@ -39,9 +39,15 @@ namespace ApiFacturas
             services.AddTransient<IEncabezadoFacturaService, EncabezadoFacturaService>();
             services.AddTransient<IProductoService, ProductoService>();
             services.AddTransient<ISedeService, SedeService>();
-            services.AddTransient<IImpuestoService, ImpuestoService>();
+            services.AddTransient<IImpuestoService, ImpuestoService>(); 
             //repos
             services.AddTransient<IProductoRepository, ProductoRepository>();
+            services.AddTransient<IImpuestoRepository, ImpuestoRepository>();
+            services.AddTransient<IClienteRepository, ClienteRepository>();
+            services.AddTransient<IDetalleFacturaRepository, DetalleFacturaRepository>();
+            services.AddTransient<IEmpresaRepository, EmpresaRepository>();
+            services.AddTransient<IEncabezadoFacturaRepository, EncabezadoFacturaRepository>();
+            services.AddTransient<ISedeRepository, SedeRepository>();
 
             services.AddDbContext<DBContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
