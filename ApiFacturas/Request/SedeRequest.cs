@@ -1,15 +1,15 @@
-﻿using System;
+﻿using ApiFacturas.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiFacturas.Models
+namespace ApiFacturas.Request
 {
-    public class Sede
+    public class SedeRequest
     {
         public int SedeId { get; set; }
         public string Nombre { get; set; }
-        public Empresa Empresa { get; set; }
         public int EmpresaId { get; set; }
         public string Direccion { get; set; }
         public string Pais { get; set; }
