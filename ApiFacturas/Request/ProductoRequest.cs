@@ -8,9 +8,8 @@ namespace ApiFacturas.Request
 {
     public class ProductoRequest
     {
-        public int ProductoId { get; set; }
         public string Descripcion { get; set; }
         public int Valor { get; set; }
-        public int IvaId { get; set; }
+        public int ImpuestoId { get; set; }
     }
 }

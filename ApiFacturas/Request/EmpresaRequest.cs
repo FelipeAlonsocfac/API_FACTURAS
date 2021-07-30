@@ -8,7 +8,7 @@ namespace ApiFacturas.Request
 {
     public class EmpresaRequest
     {
-        public int EmpresaId { get; set; }  //NIT
+        public string NIT { get; set; }
         public string Nombre { get; set; }
     }
 }

@@ -8,7 +8,10 @@ namespace ApiFacturas.Request
 {
     public class EncabezadoFacturaRequest
     {
-        public int Id { get; set; }
+        public string NumeroFactura { get; set; }
+        public string MetodoPago { get; set; }
+        public DateTime Fecha { get; set; }
+        public double Total { get; set; }
         public int ClienteID { get; set; }
         public int SedeId { get; set; }
     }
