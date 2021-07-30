@@ -10,7 +10,7 @@ namespace ApiFacturas.Models
         public int Id { get; set; }
         public int Cantidad { get; set; }
         public double Total { get; set; }
-        Producto Producto { get; set; }
+        public Producto Producto { get; set; }
         public int ProductoId { get; set; }
         public EncabezadoFactura Encabezado { get; set; }
         public int EncabezadoId { get; set; }

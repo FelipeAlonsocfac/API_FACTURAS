@@ -1,6 +1,7 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
 using ApiFacturas.Repository;
+using ApiFacturas.Request;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,9 +15,13 @@ namespace ApiFacturas.Services
         {
             _impuestoRepository = impuestoRepository;
         }
-        public async Task AddImpuesto(Impuesto impuesto)
+        public async Task AddImpuesto(ImpuestoRequest impuesto)
         {
-            await _impuestoRepository.AddImpuesto(impuesto);
+            await _impuestoRepository.AddImpuesto(new Impuesto {
+                Nombre = impuesto.Nombre,
+                Descripcion = impuesto.Descripcion,
+                Valor = impuesto.Valor
+            });
         }
         public async Task<Impuesto> GetId(int id)
         {
@@ -26,9 +31,14 @@ namespace ApiFacturas.Services
         {
             return _impuestoRepository.GetAll();
         }
-        public void UpdateImpuesto(Impuesto impuesto)
+        public void UpdateImpuesto(int impuestoId, ImpuestoRequest impuesto)
         {
-            _impuestoRepository.UpdateImpuesto(impuesto);
+            _impuestoRepository.UpdateImpuesto(new Impuesto {
+                ImpuestoId = impuestoId,
+                Nombre = impuesto.Nombre,
+                Descripcion = impuesto.Descripcion,
+                Valor = impuesto.Valor
+            });
         }
         public async Task DeleteImpuesto(Impuesto impuesto)
         {

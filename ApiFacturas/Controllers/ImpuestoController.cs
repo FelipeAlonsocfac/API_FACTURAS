@@ -1,4 +1,5 @@
 ﻿using ApiFacturas.Models;
+using ApiFacturas.Request;
 using ApiFacturas.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,15 +34,15 @@ namespace ApiFacturas.Controllers
         }
         // POST api/<ProductoController>
         [HttpPost]
-        public async Task Post([FromBody] Impuesto impuesto)
+        public async Task Post([FromBody] ImpuestoRequest impuesto)
         {
             await _impuestoService.AddImpuesto(impuesto);
         }
         // PUT api/<ProductoController>/5
         [HttpPut("{id}")]
-        public void Put([FromBody] Impuesto impuesto)
+        public void Put(int id, [FromBody] ImpuestoRequest impuesto)
         {
-            _impuestoService.UpdateImpuesto(impuesto);
+            _impuestoService.UpdateImpuesto(id, impuesto);
         }
         // DELETE api/<ProductoController>/5
         [HttpDelete("{id}")]

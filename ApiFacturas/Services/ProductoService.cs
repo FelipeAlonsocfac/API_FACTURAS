@@ -1,6 +1,7 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
 using ApiFacturas.Repository;
+using ApiFacturas.Request;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,9 +15,13 @@ namespace ApiFacturas.Services
         {
             _productoRepository = productoRepository;
         }
-        public async Task AddProducto(Producto producto)
+        public async Task AddProducto(ProductoRequest producto)
         {
-            await _productoRepository.AddProducto(producto);
+            await _productoRepository.AddProducto(new Producto {
+                Descripcion = producto.Descripcion,
+                Valor = producto.Valor,
+                ImpuestoId = producto.ImpuestoId
+    });
         }
         public async Task<Producto> GetId(int id)
         {
@@ -26,9 +31,14 @@ namespace ApiFacturas.Services
         {
             return _productoRepository.GetAll();
         }
-        public void UpdateProducto(Producto producto)
+        public void UpdateProducto(int productoId, ProductoRequest producto)
         {
-            _productoRepository.UpdateProducto(producto);
+            _productoRepository.UpdateProducto(new Producto {
+                ProductoId = productoId,
+                Descripcion = producto.Descripcion,
+                Valor = producto.Valor,
+                ImpuestoId = producto.ImpuestoId
+            });
         }
         public async Task DeleteProducto(Producto producto)
         {

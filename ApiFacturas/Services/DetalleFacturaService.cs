@@ -1,6 +1,7 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
 using ApiFacturas.Repository;
+using ApiFacturas.Request;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,9 +16,14 @@ namespace ApiFacturas.Services
         {
             _detalleFacturaRepository = detalleFacturaRepository;
         }
-        public async Task AddDetalleFactura(DetalleFactura detalleFactura)
+        public async Task AddDetalleFactura(DetalleFacturaRequest detalleFactura)
         {
-            await _detalleFacturaRepository.AddDetalleFactura(detalleFactura);
+            await _detalleFacturaRepository.AddDetalleFactura(new DetalleFactura { 
+                Cantidad = detalleFactura.Cantidad,
+                Total = detalleFactura.Total,
+                ProductoId = detalleFactura.ProductoId,
+                EncabezadoId = detalleFactura.EncabezadoId
+            });
         }
         public async Task<DetalleFactura> GetId(int id)
         {
@@ -27,9 +33,15 @@ namespace ApiFacturas.Services
         {
             return _detalleFacturaRepository.GetAll();
         }
-        public void UpdateDetalleFactura(DetalleFactura detalleFactura)
+        public void UpdateDetalleFactura(int detalleFacturaId, DetalleFacturaRequest detalleFactura)
         {
-            _detalleFacturaRepository.UpdateDetalleFactura(detalleFactura);
+            _detalleFacturaRepository.UpdateDetalleFactura(new DetalleFactura {
+                Id = detalleFacturaId,
+                Cantidad = detalleFactura.Cantidad,
+                Total = detalleFactura.Total,
+                ProductoId = detalleFactura.ProductoId,
+                EncabezadoId = detalleFactura.EncabezadoId
+            });
         }
         public async Task DeleteDetalleFactura(DetalleFactura detalleFactura)
         {

@@ -1,6 +1,7 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
 using ApiFacturas.Repository;
+using ApiFacturas.Request;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,9 +15,15 @@ namespace ApiFacturas.Services
         {
             _clienteRepository = clienteRepository;
         }
-        public async Task AddCliente(Cliente cliente)
+        public async Task AddCliente(ClienteRequest cliente)
         {
-            await _clienteRepository.AddCliente(cliente);
+            await _clienteRepository.AddCliente(new Cliente
+            {
+                Cedula = cliente.Cedula,
+                Nombre = cliente.Nombre,
+                Correo = cliente.Correo,
+                Numero = cliente.Numero
+            });
         }
         public async Task<Cliente> GetId(int id)
         {
@@ -26,9 +33,15 @@ namespace ApiFacturas.Services
         {
             return _clienteRepository.GetAll();
         }
-        public void UpdateCliente(Cliente cliente)
+        public void UpdateCliente(int clienteId, ClienteRequest cliente)
         {
-            _clienteRepository.UpdateCliente(cliente);
+            _clienteRepository.UpdateCliente(new Cliente {
+                ClienteId = clienteId,
+                Cedula = cliente.Cedula,
+                Nombre = cliente.Nombre,
+                Correo = cliente.Correo,
+                Numero = cliente.Numero
+            });
         }
         public async Task DeleteCliente(Cliente cliente)
         {

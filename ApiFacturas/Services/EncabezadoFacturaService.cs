@@ -1,6 +1,7 @@
 ﻿using ApiFacturas.DataAcces;
 using ApiFacturas.Models;
 using ApiFacturas.Repository;
+using ApiFacturas.Request;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,9 +15,16 @@ namespace ApiFacturas.Services
         {
             _encabezadoFacturaRepository = encabezadoFacturaRepository;
         }
-        public async Task AddEncabezadoFactura(EncabezadoFactura encabezadoFactura)
+        public async Task AddEncabezadoFactura(EncabezadoFacturaRequest encabezadoFactura)
         {
-            await _encabezadoFacturaRepository.AddEncabezadoFactura(encabezadoFactura);
+            await _encabezadoFacturaRepository.AddEncabezadoFactura(new EncabezadoFactura {
+                NumeroFactura = encabezadoFactura.NumeroFactura,
+                MetodoPago = encabezadoFactura.MetodoPago,
+                Fecha = encabezadoFactura.Fecha,
+                Total = encabezadoFactura.Total,
+                ClienteID = encabezadoFactura.ClienteID,
+                SedeId = encabezadoFactura.SedeId
+            });
         }
         public async Task<EncabezadoFactura> GetId(int id)
         {
@@ -26,9 +34,17 @@ namespace ApiFacturas.Services
         {
             return _encabezadoFacturaRepository.GetAll();
         }
-        public void UpdateEncabezadoFactura(EncabezadoFactura encabezadoFactura)
+        public void UpdateEncabezadoFactura(int encabezadoFacturaId, EncabezadoFacturaRequest encabezadoFactura)
         {
-            _encabezadoFacturaRepository.UpdateEncabezadoFactura(encabezadoFactura);
+            _encabezadoFacturaRepository.UpdateEncabezadoFactura(new EncabezadoFactura {
+                Id = encabezadoFacturaId,
+                NumeroFactura = encabezadoFactura.NumeroFactura,
+                MetodoPago = encabezadoFactura.MetodoPago,
+                Fecha = encabezadoFactura.Fecha,
+                Total = encabezadoFactura.Total,
+                ClienteID = encabezadoFactura.ClienteID,
+                SedeId = encabezadoFactura.SedeId
+            });
         }
         public async Task DeleteEncabezadoFactura(EncabezadoFactura encabezadoFactura)
         {
