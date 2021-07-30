@@ -10,7 +10,7 @@ namespace ApiFacturas.Models
         public int ProductoId { get; set; }
         public string Descripcion { get; set; }
         public int Valor { get; set; }
-        public Impuesto Iva { get; set; }
-        public int IvaId { get; set; }
+        public Impuesto Impuesto { get; set; }
+        public int ImpuestoId { get; set; }
     }
 }

@@ -8,11 +8,10 @@ namespace ApiFacturas.Models
     public class DetalleFactura
     {
         public int Id { get; set; }
-        public string MetodoPago { get; set; }
-        public Producto Producto { get; set; }
-        public int ProductoId { get; set; }
-        public int Cantidad { get; set; }
+        public List<int> Cantidad { get; set; }
         public double Total { get; set; }
+        List<Producto> Productos { get; set; }
+        public int ProductoId { get; set; }
         public EncabezadoFactura Encabezado { get; set; }
         public int EncabezadoId { get; set; }
     }
