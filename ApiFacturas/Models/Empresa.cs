@@ -10,6 +10,6 @@ namespace ApiFacturas.Models
         public int EmpresaId { get; set; } 
         public string NIT { get; set; }
         public string Nombre { get; set; }
-        public List<Sede> Sedes { get; set; }
+        public static List<Sede> Sedes { get; set; }
     }
 }

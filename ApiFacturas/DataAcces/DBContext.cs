@@ -16,7 +16,6 @@ namespace ApiFacturas.DataAcces
         {
 
         }
-
         public DbSet<DetalleFactura> DetalleFacturas{get; set;}
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
@@ -24,7 +23,6 @@ namespace ApiFacturas.DataAcces
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Sede> Sedes { get; set; }
         public DbSet<Impuesto> Impuestos { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
             modelBuilder.Entity<DetalleFactura>().ToTable("DetalleFacturas");
