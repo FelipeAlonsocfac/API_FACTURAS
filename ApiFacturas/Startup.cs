@@ -30,6 +30,10 @@ namespace ApiFacturas
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //automapper
+            services.AddAutoMapper(typeof(Startup));
+            services.AddControllersWithViews();
+
             //dbacces
             services.AddTransient<IDBContext, DBContext>();
             //services
